@@ -1,0 +1,34 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="save(f)"> 
+        
+        
+        <div class="form-group">
+            <label> ID :</label>
+            <input type="text" 
+            class="form-control"
+             name="id" [(ngModel)]="book.id"  
+            #i="ngModel" required pattern="^[1-9]$">
+            <div class="alert alert-danger" *ngIf="i.invalid && i.touched">ID doit être un nombre entre 1 et 9</div>
+            <div *ngIf="i.errors?.['required']">Field is required</div>
+        </div>
+
+
+        <div class="form-group">
+            <label> TITRE : </label>
+            <input type="text" 
+            class="form-control"
+             name="title" [(ngModel)]="book.titre" minlength="3" (input)="validateTitle()">
+            <div class="alert alert-danger" *ngIf="titleInvalid && titleTouched">
+                Titre doit avoir au moins du longuer 3 characters et en  majuscule.
+            </div>
+        </div>
+        <div class="form-group">
+            <label>nombre</label>
+            <input type="text" class="form-control" name="quantity" [(ngModel)]="book.nbr"
+                #r="ngModel" required pattern="^\d{3}$">
+            <div class="alert alert-danger" *ngIf="r.invalid && r.touched"> ce nombre doit avoir au moins  3-digit </div>
+            <div *ngIf="r.errors?.['required']">Field is required</div>
+        </div>
+        <button [disabled]="!isFormValid()"  type="submit">Submit</button>
+    </form>
+</div>
